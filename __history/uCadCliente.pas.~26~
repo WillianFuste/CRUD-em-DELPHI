@@ -84,19 +84,17 @@ end;
 procedure TfrmCliente.btnExcluirClick(Sender: TObject);
 begin
 
-  dm_dados.qryClienteVendedor.Open;
-  dm_dados.qryClienteVendedor.Edit;
-  if (dm_dados.qryClienteVendedor.State in [dsEdit, dsInsert]) then
 
-    dm_dados.qryClienteVendedor.fieldByName('RAZAO_SOCIAL').AsString :=
-      edtRazao.Text;
-  dm_dados.qryClienteVendedor.fieldByName('CONTATO').AsString :=
-    edtContato.Text;
-  dm_dados.qryClienteVendedor.fieldByName('TELEFONEs').AsString :=
-    MaskEdit1.Text;
-  dm_dados.qryClienteVendedor.fieldByName('ID_1').AsString;
-  dm_dados.qryClienteVendedor.Post;
-  dm_dados.qryClienteVendedor.Delete;
+   dm_dados.qryCliente.Open;
+  dm_dados.qryCliente.Edit;
+  if (dm_dados.qryCliente.State in [dsEdit, dsInsert]) then
+
+    dm_dados.qryCliente.fieldByName('RAZAO_SOCIAL').AsString := edtRazao.Text;
+  dm_dados.qryCliente.fieldByName('CONTATO').AsString := edtContato.Text;
+  dm_dados.qryCliente.fieldByName('TELEFONEs').AsString := MaskEdit1.Text;
+  dm_dados.qryCliente.Post;
+  dm_dados.qryCliente.Delete;
+
 
   ShowMessage('Cliente ' + edtRazao.Text + ' excluido.');
 
