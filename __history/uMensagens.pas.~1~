@@ -1,0 +1,34 @@
+unit uMensagens;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TfrmMensagens = class(TForm)
+    shp_fundo: TShape;
+    pnl_fundo: TPanel;
+    ATENÇÃO: TLabel;
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    SpeedButton1: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmMensagens: TfrmMensagens;
+
+implementation
+
+{$R *.dfm}
+
+end.

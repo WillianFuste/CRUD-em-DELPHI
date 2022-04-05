@@ -1,0 +1,42 @@
+unit classe.Vendedor;
+
+interface
+
+uses
+  FireDAC.Comp.Client;
+
+Type
+  TVendedor = Class
+    private
+      FVendedor    : TFdConnection;
+      FID          : Integer;
+      FRAZAOSOCIAL : String;
+      FCONTATO     : String;
+      FTELEFONE    : String;
+
+    public
+    property Vendedor           : TFDConnection read FVendedor write FVendedor;
+    property ID                 : Integer read FID write FID;
+    property RAZAOSOCIAL        : String read FRAZAOSOCIAL write FRAZAOSOCIAL;
+    property CONTATO            : String read FCONTATO write FCONTATO;
+    property TELEFONE           : String read FTELEFONE write FTELEFONE;
+
+      constructor Create ( Conexao : TFdConnection );
+      destructor Destroy ; Override;
+  End;
+implementation
+
+{ TVendedor }
+
+constructor TVendedor.Create(Conexao: TFdConnection);
+begin
+  FVendedor := Conexao;
+end;
+
+destructor TVendedor.Destroy;
+begin
+
+  inherited;
+end;
+
+end.

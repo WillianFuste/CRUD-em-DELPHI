@@ -1,0 +1,19 @@
+unit uFuncoes;
+
+interface
+
+implementation
+
+function TForm1.limpaEdit;
+
+var
+  i: Integer;
+begin
+  for i := 0 to TForm1.ComponentCount - 1 do
+  begin
+    if Form1.Components[i] is TDBEdit then
+      TEdit(Form1.Components[i]).Clear;
+  end;
+end;
+
+end.

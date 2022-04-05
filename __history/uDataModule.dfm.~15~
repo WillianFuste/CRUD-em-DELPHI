@@ -1,0 +1,103 @@
+object dm_dados: Tdm_dados
+  Height = 251
+  Width = 486
+  PixelsPerInch = 120
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'Database=D:\Banco\TESTEDELPHI.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Server=127.0.0.1'
+      'Port=3050'
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
+    Connected = True
+    LoginPrompt = False
+    Left = 72
+    Top = 48
+  end
+  object FDPhysFBDriverLink: TFDPhysFBDriverLink
+    VendorLib = 'C:\Program Files\Firebird\Firebird_2_5\WOW64\fbclient.dll'
+    Left = 320
+    Top = 48
+  end
+  object FDGUIxWaitCursor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 184
+    Top = 48
+  end
+  object qryVendedor: TFDQuery
+    Active = True
+    Connection = FDConnection
+    SQL.Strings = (
+      'select * from vendedor')
+    Left = 88
+    Top = 176
+    object qryVendedorID: TIntegerField
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qryVendedorRAZAOSOCIAL: TStringField
+      FieldName = 'RAZAOSOCIAL'
+      Origin = 'RAZAOSOCIAL'
+      Required = True
+      Size = 100
+    end
+    object qryVendedorCONTATO: TStringField
+      FieldName = 'CONTATO'
+      Origin = 'CONTATO'
+      Size = 50
+    end
+    object qryVendedorTELEFONE: TStringField
+      FieldName = 'TELEFONE'
+      Origin = 'TELEFONE'
+      Size = 30
+    end
+  end
+  object qryCliente: TFDQuery
+    Active = True
+    Connection = FDConnection
+    SQL.Strings = (
+      'select *'
+      'from cliente'
+      'WHERE RAZAO_SOCIAL'
+      'LIKE (:RAZAO_SOCIAL)')
+    Left = 208
+    Top = 176
+    ParamData = <
+      item
+        Name = 'RAZAO_SOCIAL'
+        DataType = ftString
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qryClienteID: TIntegerField
+      FieldName = 'ID'
+      Origin = 'ID'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qryClienteRAZAO_SOCIAL: TStringField
+      FieldName = 'RAZAO_SOCIAL'
+      Origin = 'RAZAO_SOCIAL'
+      Required = True
+      Size = 100
+    end
+    object qryClienteCONTATO: TStringField
+      FieldName = 'CONTATO'
+      Origin = 'CONTATO'
+      Size = 50
+    end
+    object qryClienteTELEFONES: TStringField
+      FieldName = 'TELEFONES'
+      Origin = 'TELEFONES'
+      Size = 30
+    end
+    object qryClienteID_VENDEDOR: TIntegerField
+      FieldName = 'ID_VENDEDOR'
+      Origin = 'ID_VENDEDOR'
+    end
+  end
+end

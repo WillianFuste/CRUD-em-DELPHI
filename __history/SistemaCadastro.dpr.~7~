@@ -1,0 +1,23 @@
+program SistemaCadastro;
+
+uses
+  Vcl.Forms,
+  uCadVendedor in 'uCadVendedor.pas' {frmVendedor},
+  uDataModule in 'uDataModule.pas' {dm_dados: TDataModule},
+  uMenu in 'uMenu.pas' {frmSistemaCadastro},
+  uCadCliente in 'uCadCliente.pas' {frmCliente},
+  Vcl.Themes,
+  Vcl.Styles,
+  classe.Vendedor in 'classe.Vendedor.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Windows10');
+  Application.CreateForm(TfrmSistemaCadastro, frmSistemaCadastro);
+  Application.CreateForm(Tdm_dados, dm_dados);
+  Application.CreateForm(TfrmCliente, frmCliente);
+  Application.Run;
+end.

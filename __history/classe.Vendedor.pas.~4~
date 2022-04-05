@@ -1,0 +1,86 @@
+unit classe.Vendedor;
+
+interface
+
+uses
+  FireDAC.Comp.Client;
+
+Type
+  TVendedor = Class
+  private
+    FVendedor: TFdConnection;
+    FID: Integer;
+    FRAZAOSOCIAL: String;
+    FCONTATO: String;
+    FTELEFONE: String;
+
+  public
+    property Vendedor: TFdConnection read FVendedor write FVendedor;
+    property ID: Integer read FID write FID;
+    property RAZAOSOCIAL: String read FRAZAOSOCIAL write FRAZAOSOCIAL;
+    property CONTATO: String read FCONTATO write FCONTATO;
+    property TELEFONE: String read FTELEFONE write FTELEFONE;
+
+    constructor Create(Conexao: TFdConnection);
+    destructor Destroy; Override;
+
+    function fnc_inserir_alterar(TipoOperacao: String;
+      out Erro: String): boolean;
+    procedure prc_deleta(ID: Integer);
+    function fnc_consulta(texto: String): TFDQuery;
+
+  End;
+
+implementation
+
+{ TVendedor }
+
+constructor TVendedor.Create(Conexao: TFdConnection);
+begin
+  FVendedor := Conexao;
+end;
+
+destructor TVendedor.Destroy;
+begin
+
+  inherited;
+end;
+
+function TVendedor.fnc_consulta(texto: String): TFDQuery;
+var
+  QryConsulta: TFDQuery;
+begin
+  try
+  FVendedor.Connected := False;
+  FVendedor.Connected := True;
+
+  QryConsulta := TFDQuery.Create(nil);
+  QryConsulta.Connection := FVendedor;
+
+  QryConsulta.Close;
+  QryConsulta.SQL.Clear;
+  QryConsulta.SQL.Add('SELECT ID, RAZAOSOCIAL, CONTATO, TELEFONE  ');
+  QryConsulta.SQL.Add('FROM VENDEDOR WHERE LIKE = :RAZAOSOCIAL');
+  QryConsulta.ParamByName('RAZAOSOCIAL').AsString := '%' + texto + '%';
+  QryConsulta.Open;
+  finally
+    Result := QryConsulta;
+  end;
+
+end;
+
+function TVendedor.fnc_inserir_alterar(TipoOperacao: String;
+  out Erro: String): boolean;
+begin
+
+end;
+
+procedure TVendedor.prc_deleta(ID: Integer);
+begin
+  FVendedor.Connected := False;
+  FVendedor.Connected := True;
+
+  FVendedor.ExecSQL('Delete from Vendedor where id = :id', [ID]);
+end;
+
+end.

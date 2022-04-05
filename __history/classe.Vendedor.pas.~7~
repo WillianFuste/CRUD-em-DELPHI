@@ -1,0 +1,140 @@
+unit classe.Vendedor;
+
+interface
+
+uses
+  FireDAC.Comp.Client, System.SysUtils, Vcl.Forms;
+
+Type
+  TVendedor = Class
+  private
+    FVendedor: TFdConnection;
+    FID: Integer;
+    FRAZAOSOCIAL: String;
+    FCONTATO: String;
+    FTELEFONE: String;
+
+  public
+    property Vendedor: TFdConnection read FVendedor write FVendedor;
+    property ID: Integer read FID write FID;
+    property RAZAOSOCIAL: String read FRAZAOSOCIAL write FRAZAOSOCIAL;
+    property CONTATO: String read FCONTATO write FCONTATO;
+    property TELEFONE: String read FTELEFONE write FTELEFONE;
+
+    constructor Create(Conexao: TFdConnection);
+    destructor Destroy; Override;
+
+    function fnc_inserir_alterar(TipoOperacao: String;
+      out Erro: String): boolean;
+    procedure prc_deleta(ID: Integer);
+    function fnc_consulta(texto: String): TFDQuery;
+
+  End;
+
+var
+  QryConsulta: TFDQuery;
+
+implementation
+
+{ TVendedor }
+
+constructor TVendedor.Create(Conexao: TFdConnection);
+
+begin
+  FVendedor := Conexao;
+
+  QryConsulta := TFDQuery.Create(nil);
+  QryConsulta.Connection := FVendedor;
+end;
+
+destructor TVendedor.Destroy;
+begin
+  QryConsulta.Destroy;
+
+  inherited;
+end;
+
+function TVendedor.fnc_consulta(texto: String): TFDQuery;
+
+begin
+  try
+    FVendedor.Connected := False;
+    FVendedor.Connected := True;
+
+    QryConsulta.Close;
+    QryConsulta.SQL.Clear;
+    QryConsulta.SQL.Add('SELECT ID, RAZAOSOCIAL, CONTATO, TELEFONE  ');
+    QryConsulta.SQL.Add('FROM VENDEDOR WHERE LIKE = :RAZAOSOCIAL');
+    QryConsulta.ParamByName('RAZAOSOCIAL').AsString := '%' + texto + '%';
+    QryConsulta.Open;
+  finally
+    Result := QryConsulta;
+  end;
+
+end;
+
+function TVendedor.fnc_inserir_alterar(TipoOperacao: String;
+  out Erro: String): boolean;
+
+var
+  QryInserir: TFDQuery;
+
+begin
+  try
+    try
+      FVendedor.Connected := False;
+      FVendedor.Connected := True;
+
+      QryInserir := TFDQuery.Create(nil);
+      QryInserir.Connection := FVendedor;
+
+      QryInserir.Close;
+      QryInserir.SQL.Clear;
+
+      if TipoOperacao = 'INSERIR' then
+      BEGIN
+        QryInserir.SQL.Add
+          ('INSERT INTO VENDEDOR ( RAZAOSOCIAL, CONTATO, TELEFONE ) ');
+        QryInserir.SQL.Add('VALUES (:RAZAOSOCIAL, :CONTATO, :TELEFONE)');
+        // QryInserir.ParamByName('ID').AsInteger := FID;
+
+      END
+      ELSE
+      BEGIN
+        QryInserir.SQL.Add
+          ('UPDATE VENDEDOR SET RAZAOSOCIAL, CONTATO, TELEFONE ');
+        QryInserir.SQL.Add('WHERE ID = :ID');
+
+        QryInserir.ParamByName('ID').AsInteger := FID;
+
+      END;
+
+      QryInserir.ParamByName(RAZAOSOCIAL).AsString := FRAZAOSOCIAL;
+      QryInserir.ParamByName(CONTATO).AsString := FCONTATO;
+      QryInserir.ParamByName(TELEFONE).AsString := FTELEFONE;
+      QryInserir.ExecSQL;
+
+      Result := True;
+    except
+      on E: Exception do
+      begin
+        Erro := E.Message;
+        Result := False;
+      end;
+    end;
+
+  finally
+    QryInserir.Destroy;
+  end;
+
+end;
+
+procedure TVendedor.prc_deleta(ID: Integer);
+begin
+  FVendedor.Connected := False;
+  FVendedor.Connected := True;
+
+  FVendedor.ExecSQL('Delete from Vendedor where id = :id', [ID]);
+end;
+
+end.
