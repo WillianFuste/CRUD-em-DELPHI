@@ -84,15 +84,20 @@ end;
 procedure TfrmCliente.btnExcluirClick(Sender: TObject);
 begin
 
-  with FDTableCliente do
-  begin
-    Close;
-    sql.Clear;
-    sql.Add('delete from cliente where id = :ID');
-    ParamByName('ID').AsInteger := StrToInt(edtCodCliente.Text);
-    ExecSQL;
+  dm_dados.qryClienteVendedor.Open;
+  dm_dados.qryClienteVendedor.Edit;
+  if (dm_dados.qryClienteVendedor.State in [dsEdit, dsInsert]) then
 
-  end;
+    dm_dados.qryClienteVendedor.fieldByName('RAZAO_SOCIAL').AsString :=
+      edtRazao.Text;
+  dm_dados.qryClienteVendedor.fieldByName('CONTATO').AsString :=
+    edtContato.Text;
+  dm_dados.qryClienteVendedor.fieldByName('TELEFONEs').AsString :=
+    MaskEdit1.Text;
+  dm_dados.qryClienteVendedor.fieldByName('ID_1').AsString;
+  dm_dados.qryClienteVendedor.Post;
+  dm_dados.qryClienteVendedor.Delete;
+
   ShowMessage('Cliente ' + edtRazao.Text + ' excluido.');
 
 end;
