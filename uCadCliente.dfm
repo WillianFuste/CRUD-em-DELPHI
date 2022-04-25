@@ -10,7 +10,6 @@ object frmCliente: TfrmCliente
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
-  PixelsPerInch = 96
   TextHeight = 15
   object Label1: TLabel
     Left = 8
@@ -41,11 +40,18 @@ object frmCliente: TfrmCliente
     Caption = 'Pesquisa'
   end
   object Label5: TLabel
-    Left = 488
+    Left = 344
     Top = 3
     Width = 62
     Height = 15
     Caption = 'Cod Cliente'
+  end
+  object lblVendedor: TLabel
+    Left = 488
+    Top = 3
+    Width = 50
+    Height = 15
+    Caption = 'Vendedor'
   end
   object dbgMostraDadosCliente: TDBGrid
     Left = 8
@@ -194,13 +200,22 @@ object frmCliente: TfrmCliente
     TabOrder = 9
   end
   object edtCodCliente: TEdit
-    Left = 488
+    Left = 344
     Top = 24
     Width = 121
     Height = 23
     Enabled = False
     ReadOnly = True
     TabOrder = 10
+  end
+  object DBComboBox1: TDBComboBox
+    Left = 488
+    Top = 24
+    Width = 145
+    Height = 23
+    DataField = 'RAZAOSOCIAL'
+    DataSource = dsVendedor
+    TabOrder = 11
   end
   object dsCliente: TDataSource
     DataSet = dm_dados.qryCliente
@@ -243,8 +258,13 @@ object frmCliente: TfrmCliente
     end
   end
   object dsCliVen: TDataSource
-    DataSet = dm_dados.qryClienteVendedor
+    DataSet = dm_dados.qryVendedor
     Left = 400
     Top = 296
+  end
+  object dsVendedor: TDataSource
+    DataSet = dm_dados.qryVendedor
+    Left = 624
+    Top = 312
   end
 end

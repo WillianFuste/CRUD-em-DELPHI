@@ -9,7 +9,7 @@ uses
   uDataModule, Vcl.StdCtrls, Vcl.Mask, FireDAC.Comp.Client, uNumero,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet;
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, Vcl.DBCtrls;
 
 type
   TfrmCliente = class(TForm)
@@ -37,6 +37,9 @@ type
     Label5: TLabel;
     edtCodCliente: TEdit;
     dsCliVen: TDataSource;
+    DBComboBox1: TDBComboBox;
+    dsVendedor: TDataSource;
+    lblVendedor: TLabel;
     procedure btnConsultaClick(Sender: TObject);
     procedure Edit3Change(Sender: TObject);
     procedure MaskEdit1Exit(Sender: TObject);
@@ -87,19 +90,19 @@ begin
   dm_dados.qryClienteVendedor.Open;
   dm_dados.qryClienteVendedor.Edit;
   if (dm_dados.qryClienteVendedor.State in [dsEdit, dsInsert]) then
-
+  begin
     dm_dados.qryClienteVendedor.fieldByName('RAZAO_SOCIAL').AsString :=
       edtRazao.Text;
-  dm_dados.qryClienteVendedor.fieldByName('CONTATO').AsString :=
-    edtContato.Text;
-  dm_dados.qryClienteVendedor.fieldByName('TELEFONEs').AsString :=
-    MaskEdit1.Text;
-  dm_dados.qryClienteVendedor.fieldByName('ID_1').AsString;
-  dm_dados.qryClienteVendedor.Post;
-  dm_dados.qryClienteVendedor.Delete;
+    dm_dados.qryClienteVendedor.fieldByName('CONTATO').AsString :=
+      edtContato.Text;
+    dm_dados.qryClienteVendedor.fieldByName('TELEFONEs').AsString :=
+      MaskEdit1.Text;
+    dm_dados.qryClienteVendedor.fieldByName('ID_1').AsString;
+    dm_dados.qryClienteVendedor.Post;
+    dm_dados.qryClienteVendedor.Delete;
 
-  ShowMessage('Cliente ' + edtRazao.Text + ' excluido.');
-
+    ShowMessage('Cliente ' + edtRazao.Text + ' excluido.');
+  end;
 end;
 
 procedure TfrmCliente.btnInserirClick(Sender: TObject);

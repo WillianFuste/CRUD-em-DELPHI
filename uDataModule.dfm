@@ -1,7 +1,6 @@
 object dm_dados: Tdm_dados
   Height = 367
   Width = 608
-  PixelsPerInch = 96
   object FDConnection: TFDConnection
     Params.Strings = (
       'Database=D:\Banco\TESTEDELPHI.FDB'
@@ -27,6 +26,8 @@ object dm_dados: Tdm_dados
     Top = 48
   end
   object qryVendedor: TFDQuery
+    Active = True
+    DetailFields = 'RAZAOSOCIAL'
     Connection = FDConnection
     SQL.Strings = (
       'select *'
